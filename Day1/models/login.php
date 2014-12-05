@@ -12,7 +12,7 @@ class login{
 
     $dbh = new PDO("mysql:host=localhost;dbname=ssl;port=8889", "root", "root");
 
-    $stmnt = $dbh->prepare("select username, password from users where username = :username and password = :password");
+    $stmnt = $dbh->prepare("select id, username, password from users where username = :username and password = :password");
 
         //$st->bindParam(':img',$img);
         //$sth->bindParam(':password',$password);

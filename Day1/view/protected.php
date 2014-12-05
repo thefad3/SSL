@@ -6,9 +6,16 @@
  * Time: 11:21 AM
  */
 if(!$_SESSION["logingood"]){
-    echo "The Rest of the content";
+
 }
+?>
 
+<a href="index.php?action=addUserForm">Add User Form</a><br>
 
+<?
+
+foreach($data as $value){
+    echo $value['username']."<a href='index.php?action=deleteUser&id=".$value['id']."'>Delete</a> <br>";
+}
 
 ?>

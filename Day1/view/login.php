@@ -16,7 +16,5 @@
     <input type="text" name="username"><br>
     <label>Password</label>
     <input type="password" name="password"><br>
-    <label>Upload Avatar:</label>
-    <input name="userfile" type="file" />
     <input type="submit" value="Send File" />
 </form>
