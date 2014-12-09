@@ -10,7 +10,7 @@ class users{
 
     public function getUsers(){
 
-    $dbh = new PDO("mysql:host=localhost;dbname=ssl;port=8889", "root", "root");
+    $dbh = new PDO("mysql:host=localhost;dbname=users;port=8889", "root", "root");
 
     $stmnt = $dbh->prepare("SELECT * FROM users");
         //$st->bindParam(':img',$img);
@@ -21,7 +21,7 @@ class users{
         return $result;
     }
     public function addUser($username='', $password=''){
-    $dbh = new PDO("mysql:host=localhost;dbname=ssl;port=8889", "root", "root");
+    $dbh = new PDO("mysql:host=localhost;dbname=users;port=8889", "root", "root");
     $stmnt = $dbh->prepare("insert into users (username, password) values(:username, :password)");
     $stmnt->execute(array(":username"=>$username,
                             ":password"=>$password));

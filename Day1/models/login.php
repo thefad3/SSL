@@ -8,9 +8,9 @@
 
 class login{
 
-    public function checkLogin($username="", $password="", $img=""){
+    public function checkLogin($username="", $password="", $id=""){
 
-    $dbh = new PDO("mysql:host=localhost;dbname=ssl;port=8889", "root", "root");
+    $dbh = new PDO("mysql:host=localhost;dbname=users;port=8889", "root", "root");
 
     $stmnt = $dbh->prepare("select id, username, password from users where username = :username and password = :password");
 

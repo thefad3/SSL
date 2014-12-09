@@ -8,9 +8,11 @@
 session_start();
 include('models/login.php');
 include('models/views.php');
+include('models/update.php');
 include('models/delete.php');
 include('models/users.php');
 $views = new views();
+$update = new update();
 $delete = new delete();
 $login = new login();
 $users = new users();
@@ -18,7 +20,6 @@ $users = new users();
 
 
 if(!empty($_GET["action"])) {
-
 
 
     if($_GET["action"] == "loginForm"){
@@ -32,47 +33,48 @@ if(!empty($_GET["action"])) {
             //set session
 
             $_SESSION['logingood'] = true;
-            $views->getView("view/protected.php", $data);
-            $data = $users->getUsers();
+            header("Location: ./index.php?action=addUserAction");
 
         }else{
         //session
         $_SESSION['logingood'] = false;
-         header("Location: /index.php?action=loginForm");
+         header("Location: ./index.php?action=loginForm");
         }
-        //$_SESSION['user'] = $_POST['user'];
-        //$_SESSION['pass'] = sha1($_POST['pass']);
-    }else if($_GET["action"] == "addUserForm"){
 
+    }else if($_GET["action"] == "addUserForm"){
         $views->getView("view/header.php");
         $views->getView("view/adduserform.php");
 
     }else if($_GET['action'] == "addUserAction"){
-        $users->addUser($_POST["username"], $_POST["password"]);
+        $users->addUser($_POST["username"], sha1($_POST["password"]));
         $data = $users->getUsers();
+        $views->getView("view/header.php");
         $views->getView("view/protected.php", $data);
 
     }else if($_GET['action'] == "deleteUser"){
         $id=$_GET['id'];
         $delete->deleteU($id);
-        $views->getView("view/protected.php");
-    }
-
-
-
-
-    if ($_GET["action"] == "registerForm") {
-
-        $views->getView("view/header.php");
-        $views->getView("view/form.php");
-
-    }
-    else if($_GET["action"] == "registerAction"){
-
         $views->getView("view/header.php");
 
-        $data = $_POST;
-        $views->getView("view/results.php", $data);
+        $data = $users->getUsers();
+        $views->getView("./view/protected.php", $data);
+    }
+
+    else if($_GET['action'] == "updateUser"){
+        $id = $_GET['id'];
+        //echo $id; check for id number correct
+        $fillForm = $update->fill($id);
+        $views->getView("view/update.php");
+
+
+    } else if($_GET['action'] == "updateAction"){
+        $id = $_GET['id'];
+        $username = $_POST['username'];
+        $password = sha1($_POST['password']);
+        $fil = $update->updateU($id, $username, $password);
+        header("Location: ./index.php?action=addUserAction");
+
+
 
     }
     else {
